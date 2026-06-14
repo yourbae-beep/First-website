@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Random Fun Facts</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: radial-gradient(circle at top, #7dd3fc 0%, #0f172a 60%);
+        color: #f8fafc;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+      }
+
+      .card {
+        width: min(100%, 680px);
+        background: rgba(15, 23, 42, 0.95);
+        border: 1px solid rgba(148, 163, 184, 0.16);
+        border-radius: 24px;
+        box-shadow: 0 30px 80px rgba(15, 23, 42, 0.35);
+        padding: 2.5rem;
+      }
+
+      .title {
+        font-size: clamp(2rem, 4vw, 3rem);
+        line-height: 1.05;
+        margin: 0 0 1rem;
+      }
+
+      .subtitle {
+        margin: 0 0 2.25rem;
+        color: #94a3b8;
+        font-size: 1rem;
+        max-width: 34rem;
+      }
+
+      .fact-box {
+        background: linear-gradient(180deg, rgba(59, 130, 246, 0.16), rgba(15, 23, 42, 0.85));
+        border: 1px solid rgba(59, 130, 246, 0.25);
+        border-radius: 20px;
+        padding: 2rem;
+        min-height: 180px;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        font-size: 1.25rem;
+        line-height: 1.6;
+      }
+
+      .fact-box span {
+        display: block;
+        font-weight: 600;
+      }
+
+      .controls {
+        margin-top: 2rem;
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      button {
+        border: none;
+        border-radius: 999px;
+        padding: 0.95rem 1.5rem;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: transform 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+      }
+
+      button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 12px 24px rgba(59, 130, 246, 0.18);
+      }
+
+      .primary {
+        background: #38bdf8;
+        color: #0f172a;
+      }
+
+      .secondary {
+        background: rgba(148, 163, 184, 0.12);
+        color: #e2e8f0;
+      }
+
+      .footer {
+        margin-top: 1.75rem;
+        color: #94a3b8;
+        font-size: 0.95rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <h1 class="title">Random Fun Facts</h1>
+      <p class="subtitle">Click the button to discover fresh, surprising, and shareable trivia facts. Each fact is unique and ready to brighten your day.</p>
+
+      <section class="fact-box" id="factBox">
+        <span id="factText">Welcome! Press the button to see a fun fact.</span>
+      </section>
+
+      <div class="controls">
+        <button class="primary" id="newFactButton">Show me a fun fact</button>
+        <button class="secondary" id="copyFactButton">Copy fact</button>
+      </div>
+
+      <p class="footer">Powered by simple JavaScript and a curated list of fun facts.</p>
+    </main>
+
+    <script>
+      const facts = [
+        "Honey never spoils. Archaeologists have found edible honey in ancient Egyptian tombs.",
+        "A single bolt of lightning contains enough energy to toast 100,000 slices of bread.",
+        "Octopuses have three hearts and blue blood.",
+        "Bananas are berries, but strawberries are not.",
+        "There are more stars in the observable universe than grains of sand on all the Earth’s beaches.",
+        "A day on Venus is longer than its year.",
+        "Wombat poop is cube-shaped.",
+        "Sharks existed before trees.",
+        "The Eiffel Tower can be 15 cm taller during hot days because metal expands when heated.",
+        "A group of flamingos is called a flamboyance.",
+        "The longest recorded flight of a chicken is 13 seconds.",
+        "A sneeze can travel up to 100 miles per hour.",
+        "Some turtles can breathe through their butts.",
+        "Cleopatra lived closer in time to the first Moon landing than to the building of the Great Pyramid.",
+        "A bolt of lightning is five times hotter than the surface of the Sun."
+      ];
+
+      const factText = document.getElementById('factText');
+      const newFactButton = document.getElementById('newFactButton');
+      const copyFactButton = document.getElementById('copyFactButton');
+
+      function getRandomFact() {
+        const index = Math.floor(Math.random() * facts.length);
+        return facts[index];
+      }
+
+      function showFact() {
+        factText.textContent = getRandomFact();
+      }
+
+      async function copyFact() {
+        const text = factText.textContent;
+        try {
+          await navigator.clipboard.writeText(text);
+          copyFactButton.textContent = 'Copied!';
+          setTimeout(() => {
+            copyFactButton.textContent = 'Copy fact';
+          }, 1200);
+        } catch (error) {
+          copyFactButton.textContent = 'Copy failed';
+          console.error('Clipboard copy failed', error);
+          setTimeout(() => {
+            copyFactButton.textContent = 'Copy fact';
+          }, 1200);
+        }
+      }
+
+      newFactButton.addEventListener('click', showFact);
+      copyFactButton.addEventListener('click', copyFact);
+
+      showFact();
+    </script>
+  </body>
+</h
